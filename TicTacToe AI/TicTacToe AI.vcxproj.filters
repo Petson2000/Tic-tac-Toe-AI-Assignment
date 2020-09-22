@@ -18,5 +18,16 @@
     <ClCompile Include="TicTacToe AI.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GridBuilder.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GridBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

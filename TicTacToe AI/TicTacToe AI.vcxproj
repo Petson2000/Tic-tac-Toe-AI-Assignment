@@ -139,7 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GridBuilder.cpp" />
     <ClCompile Include="TicTacToe AI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GridBuilder.h" />
+    <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
