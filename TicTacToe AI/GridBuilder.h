@@ -10,5 +10,10 @@ class GridBuilder
 public:
 
 	void GenerateGrid();
+	
+public:
 
+	const static int32_t gridSize = 3;
+
+	char grid[gridSize][gridSize];
 };

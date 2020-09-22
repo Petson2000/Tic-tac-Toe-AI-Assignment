@@ -140,9 +140,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GridBuilder.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="TicTacToe AI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AI.h" />
     <ClInclude Include="GridBuilder.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>

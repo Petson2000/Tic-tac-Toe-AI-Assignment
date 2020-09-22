@@ -2,10 +2,6 @@
 
 void GridBuilder::GenerateGrid()
 {
-	const int32_t gridSize = 3;
-
-	char grid[gridSize][gridSize];
-
 	int number = 1;
 
 	for (int x = 0; x < gridSize; x++)
@@ -21,7 +17,6 @@ void GridBuilder::GenerateGrid()
 
 	for (int x = 0; x < gridSize; x++)
 	{
-
 		for (int y = 0; y < gridSize; y++)
 		{
 			printf(" %c |", grid[x][y]);
