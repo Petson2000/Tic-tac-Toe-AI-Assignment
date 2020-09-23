@@ -3,13 +3,22 @@
 #include <iostream>
 #include <string>
 
+#include "Utilities.h"
+
 using namespace std;
 
 class GridBuilder
 {
 public:
 
+	GridBuilder();
+	~GridBuilder();
+
 	void GenerateGrid();
+
+	void DisplayGrid();
+
+	bool CheckGridPosition(int number, char mark);
 	
 public:
 

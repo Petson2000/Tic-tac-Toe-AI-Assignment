@@ -6,5 +6,7 @@ public:
 	char Mark = 'O';
 
 public:
-	void PlanTurn();
+	void PlanMove(char grid[3][3]);
+
+	bool CheckValidMoves(char grid[3][3]);
 };

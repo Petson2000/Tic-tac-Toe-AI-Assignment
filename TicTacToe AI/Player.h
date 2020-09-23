@@ -7,7 +7,7 @@ public:
 	char Mark = 'X';
 
 public:
-	void PlayTurn();
+	char SelectNumber();
 
 private:
 	void ApplyMarkOnGrid();

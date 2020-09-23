@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AI.cpp" />
     <ClCompile Include="GridBuilder.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TicTacToe AI.cpp" />
