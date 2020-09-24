@@ -4,7 +4,9 @@ void AI::PlanMove(char grid[3][3])
 {
 	if (SearchGridForValidSquares(grid))
 	{
-		evaluateBoard(grid);
+		if (evaluateBoard(grid))
+		{
+		}
 	}
 }
 
@@ -24,7 +26,7 @@ bool AI::SearchGridForValidSquares(char grid[3][3])
 	return false;
 }
 
-int AI::evaluateBoard(char grid[3][3])
+bool AI::evaluateBoard(char grid[3][3])
 {
 	//Check if the game is won.
 	index = 0;
@@ -32,116 +34,110 @@ int AI::evaluateBoard(char grid[3][3])
 	for (int row = 0; row < 3; row++)
 	{
 		//Check all rows to see if anyone has won.
-
-		if (CheckRow(grid, row, 0))
+		if (grid[row][0] == grid[row][1] && grid[row][1] == grid[row][2])
 		{
-			if (CheckRow(grid, row, 1))
+			if (grid[row][0] == 'X')
 			{
-				if (CheckRow(grid, row, 2))
-				{
-					if (grid[row][0] == 'X')
-					{
-						return +10;
-					}
+				//Player won
+			}
 
-					if (grid[row][0] == 'O')
-					{
-						return -10;
-					}
-				}
+			else if (grid[row][0] == 'O')
+			{
+				//AI Won
 			}
 		}
-
-		//Todo cleaner checks
-		//Todo: Implement search columns and diagonal.
 	}
 
-	return 0;
+	//Check columns
+	for (int column = 0; column < 3; column++)
+	{
+		if (grid[0][column] == grid[1][column] && grid[1][column] == grid[2][column])
+		{
+			if (grid[0][column] == 'X')
+			{
+				//Player won
+			}
+
+			else if (grid[0][column] == 'O')
+			{
+				//AI Won
+			}
+		}
+	}
+
+	//Check diagonally
+	if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2])
+	{
+		if (grid[0][0] == 'X')
+		{
+			//Player won
+		}
+
+		else if (grid[0][0] == 'O')
+		{
+			//AI Won
+		}
+	}
+
+	return true;
 }
 
-bool AI::CheckRow(char grid[3][3], char RowPos, char ColumnPos)
+int AI::MiniMax(char grid[3][3], int32_t depth)
 {
-	if (grid[RowPos][ColumnPos] == grid[RowPos][ColumnPos + 1])
+	bestVal = 1000;
+
+	for (int row = 0; row < 3; row++)
 	{
-		if (grid[RowPos][ColumnPos + 1] == grid[RowPos][ColumnPos + 2])
+		for (int column = 0; column < 3; column++)
 		{
-			return true;
-		}
-	}
-
-	return false;
-}
-
-int AI::MiniMax(char grid[3][3], int32_t depth, bool isMaximizingPlayer)
-{
-	if (evaluateBoard(grid) == 10)
-	{
-		//Player won
-	}
-
-	if (evaluateBoard(grid) == -10)
-	{
-		//AI Won
-	}
-
-	//if (evaluateBoard(grid) == 0)
-	//{
-	//	//Game was a tie
-	//}
-	if (isMaximizingPlayer)
-	{
-		bestVal = -INFINITY;
-		value = 0; //FIX LATER 
-
-		for (int row = 0; row < 3; row++)
-		{
-			for (int column = 0; column < 3; column++)
+			if (grid[row][column] == 'X' && grid[row][column] == 'O')
 			{
-				if (!isNumber(grid[row][column]))
-				{
-					continue;
-				}
-
-				MiniMax(grid, depth + 1, false);
-
-				bestVal = max(bestVal, MiniMax(grid, depth + 1, !isMaximizingPlayer));
-
-				return bestVal;
+				continue;
 			}
-		}
-	}
 
-	else
-	{
-		bestVal = INFINITY;
+			MiniMax(grid, depth + 1);
 
-		for (int row = 0; row < 3; row++)
-		{
-			for (int column = 0; column < 3; column++)
-			{
-				value = MiniMax(grid, depth + 1, true);
-				bestVal = min(bestVal, value);
-				return bestVal;
-			}
+			bestVal = max(bestVal, MiniMax(grid, depth + 1));
+
+			return bestVal;
 		}
 	}
 
 	return 0;
 }
 
-bool AI::isNumber(char input)
+Move AI::MakeBestMove(char grid[3][3])
 {
-	if (isalnum(input))
-	{
-		if (input < '0' || input > '9')
-		{
-			return false;
-		}
+	int value = 0;
+	Move bestMove;
 
-		return true;
+	bestMove.row = -1;
+	bestMove.column = -1;
+
+	for (int row = 0; row < 3; row++)
+	{
+		for (int column = 0; column < 3; column ++)
+		{
+			if (grid[row][column] == 'X' && grid[row][column] != 'O')
+			{
+				continue;
+			}
+
+			int moveValue = MiniMax(grid, 0);
+
+			if (moveValue >= value)
+			{
+				bestMove.row = row;
+				bestMove.column = column;
+				value = moveValue;
+			}
+		}
 	}
 
-	return false;
+	printf("Chosen Row: %f", bestMove.row);
+	printf("Chosen Column: %f", bestMove.column);
+
+	return bestMove;
 }
 
 

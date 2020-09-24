@@ -8,7 +8,4 @@ public:
 
 public:
 	char SelectNumber();
-
-private:
-	void ApplyMarkOnGrid();
 };

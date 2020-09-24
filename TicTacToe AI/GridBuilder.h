@@ -25,4 +25,6 @@ public:
 	const static int32_t gridSize = 3;
 
 	char grid[gridSize][gridSize];
+
+	bool checkGameWon(char grid[3][3]);
 };

@@ -16,8 +16,3 @@ char Player::SelectNumber()
 		return input.c_str()[0];
 	}
 }
-
-void Player::ApplyMarkOnGrid()
-{
-
-}

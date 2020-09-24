@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="AI.h" />
     <ClInclude Include="GridBuilder.h" />
+    <ClInclude Include="Move.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

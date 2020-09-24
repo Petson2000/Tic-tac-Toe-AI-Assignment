@@ -2,18 +2,18 @@
 #include <cstdint>
 #include <map>
 #include <iostream>
+#include "Move.h"
 #include <algorithm>
 
 using namespace std;
+
 class AI 
 {
 public:
 	char Mark = 'O';
 
 	char validSquares[3][3];
-
-	std::map<char, char> validPositions;
-
+	char bestMove[1][1];
 	int32_t index = 0;
 
 	int32_t bestVal = 0;
@@ -24,11 +24,9 @@ public:
 
 	bool SearchGridForValidSquares(char grid[3][3]);
 
-	int evaluateBoard(char grid[3][3]);
+	bool evaluateBoard(char grid[3][3]);
 
-	bool CheckRow(char grid[3][3], char RowPos, char ColumnPos);
+	int MiniMax(char grid[3][3], int32_t depth);
 
-	int MiniMax(char grid[3][3], int32_t depth, bool isMaximizingPlayer);
-
-	bool isNumber(char input);
+	Move MakeBestMove(char grid[3][3]);
 };
