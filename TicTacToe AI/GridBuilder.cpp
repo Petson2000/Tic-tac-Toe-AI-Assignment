@@ -2,11 +2,12 @@
 
 GridBuilder::GridBuilder()
 {
+
 }
 
 GridBuilder::~GridBuilder()
 {
-	delete grid;
+	//delete grid;
 }
 
 void GridBuilder::GenerateGrid()

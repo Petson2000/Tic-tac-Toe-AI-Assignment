@@ -10,6 +10,7 @@ int main()
 {
 	int points = 0;
 	bool gameActive = true;
+	bool playersTurn = true;
 	Player* player = new Player();
 	AI* enemy = new AI();
 	GridBuilder* gridBuilder = new GridBuilder();
@@ -21,17 +22,23 @@ int main()
 
 		char playerInput;
 
-		playerInput = player->SelectNumber();
-
-		if (playerInput <= '0' || playerInput >= '9')
+		if (playersTurn)
 		{
-			printf("Invalid input");
+			playerInput = player->SelectNumber();
+			if (playerInput <= '0' || playerInput >= '9')
+			{
+				printf("Invalid input");
+			}
 		}
 
+
 		int enteredNumber = playerInput - '0'; //Convert to int
+
+	
 		if (gridBuilder->CheckGridPosition(enteredNumber, player->Mark))
 		{
-			//Switch to AIs turn
+			playersTurn = false;
+			enemy->PlanMove(gridBuilder->grid);
 		}
 
 
