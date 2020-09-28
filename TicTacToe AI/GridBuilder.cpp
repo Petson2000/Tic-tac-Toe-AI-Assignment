@@ -10,50 +10,49 @@ GridBuilder::~GridBuilder()
 	//delete grid;
 }
 
-void GridBuilder::GenerateGrid()
+void GridBuilder::DrawGrid()
 {
-	for (int x = 0; x < gridSize; x++)
-	{
-		for (int y = 0; y < gridSize; y++)
-		{
-			grid[x][y] = '_';
-		}
-	}
-}
-
-void GridBuilder::DisplayGrid()
-{
-	printf("\n------------------\n");
 	int number = 1;
+	printf("\n-------------\n");
 	for (int x = 0; x < gridSize; x++)
 	{
 		for (int y = 0; y < gridSize; y++)
 		{
-			printf("%d:", number); //Change to square number later
 			printf(" %c |", grid[x][y]);
 			number++;
 		}
 
-		printf("\n------------------\n");
+		printf("\n-------------\n");
 	}
 }
 
 bool GridBuilder::CheckGridPosition(int number, char mark)
 {
-	int index = number - 1;
-	int row = index / gridSize;
-	int column = index % gridSize;
+	//int index = number - 1;
+	//int row = index / gridSize;
+	//int column = index % gridSize;
+	//
+	//char gridPosition = grid[row][column];
+	//
+	//if (gridPosition == 'X' || gridPosition == 'O')
+	//{
+	//	printf("That position is taken");
+	//	return false;
+	//}
 
-	char gridPosition = grid[row][column];
-
-	if (gridPosition == 'X' || gridPosition == 'O')
+	for (int row = 0; row < gridSize; row++)
 	{
-		printf("That position is taken");
-		return false;
+		for (int column = 0; column < gridSize; column++)
+		{
+			if (grid[row][column] == number)
+			{
+				grid[row][column] = mark;
+				return true;
+			}
+		}
 	}
 
-	grid[row][column] = mark;
-	return true;
+	return false;
 }
 
 bool GridBuilder::checkGameWon(char grid[3][3])

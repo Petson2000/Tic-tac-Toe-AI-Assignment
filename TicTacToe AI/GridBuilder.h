@@ -14,9 +14,7 @@ public:
 	GridBuilder();
 	~GridBuilder();
 
-	void GenerateGrid();
-
-	void DisplayGrid();
+	void DrawGrid();
 
 	bool CheckGridPosition(int number, char mark);
 	
@@ -24,7 +22,7 @@ public:
 
 	const static int32_t gridSize = 3;
 
-	char grid[gridSize][gridSize];
+	char grid[gridSize][gridSize] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
 	bool checkGameWon(char grid[3][3]);
 };

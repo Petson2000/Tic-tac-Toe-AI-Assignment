@@ -12,7 +12,7 @@ char Player::SelectNumber()
 
 	if (input != "")
 	{
-		std::cout << input << std::endl;
+		std::cout << "Player chosen square is: " << input << std::endl;
 		return input.c_str()[0];
 	}
 }

@@ -14,19 +14,16 @@ public:
 
 	char validSquares[3][3];
 	char bestMove[1][1];
-	int32_t index = 0;
 
 	int32_t bestVal = 0;
 	int32_t value = 0;
 
 public:
-	void PlanMove(char grid[3][3]);
-
 	bool SearchGridForValidSquares(char grid[3][3]);
 
 	bool evaluateBoard(char grid[3][3]);
 
-	int MiniMax(char grid[3][3], int32_t depth);
+	int MiniMax(Move node, char grid[3][3], int32_t depth, bool maximizingPlayer);
 
 	Move MakeBestMove(char grid[3][3]);
 };

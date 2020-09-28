@@ -19,15 +19,17 @@ int main()
 	Player* player = new Player();
 	AI* enemy = new AI();
 	GridBuilder* gridBuilder = new GridBuilder();
-	gridBuilder->GenerateGrid();
+	gridBuilder->DrawGrid();
 
 	while (gameActive)
 	{
-		gridBuilder->DisplayGrid();
 
 		if (playersTurn)
 		{
+			gridBuilder->DrawGrid();
+
 			playerInput = player->SelectNumber();
+
 			if (playerInput <= '0' || playerInput >= '9')
 			{
 				printf("Invalid input");
@@ -35,18 +37,16 @@ int main()
 
 		}
 
-		int enteredNumber = playerInput - '0'; //Convert to int
+		int enteredNumber = playerInput;
 
 		if (gridBuilder->CheckGridPosition(enteredNumber, player->Mark))
 		{
 			playersTurn = false;
 
 			Move enemyMove;
-
-			enemy->PlanMove(gridBuilder->grid);
-
+			
 			enemyMove = enemy->MakeBestMove(gridBuilder->grid);
-
+			
 			gridBuilder->grid[enemyMove.row][enemyMove.column] = 'O';
 			
 			playersTurn = true;

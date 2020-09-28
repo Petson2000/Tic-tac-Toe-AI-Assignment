@@ -1,15 +1,5 @@
 #include "AI.h"
 
-void AI::PlanMove(char grid[3][3])
-{
-	if (SearchGridForValidSquares(grid))
-	{
-		if (evaluateBoard(grid))
-		{
-		}
-	}
-}
-
 bool AI::SearchGridForValidSquares(char grid[3][3])
 {
 	for (int x = 0; x < 3; x++)
@@ -28,9 +18,6 @@ bool AI::SearchGridForValidSquares(char grid[3][3])
 
 bool AI::evaluateBoard(char grid[3][3])
 {
-	//Check if the game is won.
-	index = 0;
-
 	for (int row = 0; row < 3; row++)
 	{
 		//Check all rows to see if anyone has won.
@@ -82,33 +69,62 @@ bool AI::evaluateBoard(char grid[3][3])
 	return true;
 }
 
-int AI::MiniMax(char grid[3][3], int32_t depth)
+int AI::MiniMax(Move node, char grid[3][3], int32_t depth, bool maximizingPlayer)
 {
-	bestVal = 1000;
-
-	for (int row = 0; row < 3; row++)
+	if (depth == 0 || !evaluateBoard(grid))
 	{
-		for (int column = 0; column < 3; column++)
+		return -1;
+		//Return static evalutation of this position
+	}
+
+	if (maximizingPlayer)
+	{
+		int maxValue = -INFINITY;
+
+		for (int row = 0; row < 3; row++)
 		{
-			if (grid[row][column] == 'X' && grid[row][column] == 'O')
+			for (int column = 0; column < 3; column++)
 			{
-				continue;
+				Move position;
+				position.row = row;
+				position.column = column;
+
+				int value = MiniMax(position, grid, depth - 1, false);
+				maxValue = max(maxValue, value);
 			}
-
-			MiniMax(grid, depth + 1);
-
-			bestVal = max(bestVal, MiniMax(grid, depth + 1));
-
-			return bestVal;
 		}
+
+		return maxValue;
+	}
+
+	else
+	{
+		int minValue = INFINITY;
+
+		for (int row = 0; row < 3; row++)
+		{
+			for (int column = 0; column < 3; column++)
+			{
+				Move position;
+				position.row = row;
+				position.column = column;
+
+				int value = MiniMax(position, grid, depth - 1, true);
+				minValue = min(minValue, value);
+			}
+		}
+
+		return minValue;
 	}
 
 	return 0;
 }
 
+
+
 Move AI::MakeBestMove(char grid[3][3])
 {
-	int value = 0;
+	int bestValue = -INFINITY;
 	Move bestMove;
 
 	bestMove.row = -1;
@@ -123,7 +139,10 @@ Move AI::MakeBestMove(char grid[3][3])
 				continue;
 			}
 
-			int moveValue = MiniMax(grid, 0);
+			bestMove.row = row;
+			bestMove.column = column;
+
+			int moveValue = MiniMax(bestMove, grid, 3, true);
 
 			if (moveValue >= value)
 			{
@@ -133,7 +152,7 @@ Move AI::MakeBestMove(char grid[3][3])
 			}
 		}
 	}
-
+	printf("The value of the best node is: %d", bestVal);
 	printf("Chosen Row: %f", bestMove.row);
 	printf("Chosen Column: %f", bestMove.column);
 
