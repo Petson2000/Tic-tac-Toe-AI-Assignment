@@ -19,6 +19,7 @@ void GridBuilder::DrawGrid()
 		for (int y = 0; y < gridSize; y++)
 		{
 			printf(" %c |", grid[x][y]);
+			positions[number] = new Move(x, y);
 			number++;
 		}
 

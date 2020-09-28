@@ -4,6 +4,7 @@
 #include <string>
 
 #include "Utilities.h"
+#include "Move.h"
 
 using namespace std;
 
@@ -21,6 +22,8 @@ public:
 public:
 
 	const static int32_t gridSize = 3;
+
+	Move* positions[9];
 
 	char grid[gridSize][gridSize] = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
