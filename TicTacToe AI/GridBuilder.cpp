@@ -2,7 +2,6 @@
 
 GridBuilder::GridBuilder()
 {
-
 }
 
 GridBuilder::~GridBuilder()
@@ -19,7 +18,6 @@ void GridBuilder::DrawGrid()
 		for (int y = 0; y < gridSize; y++)
 		{
 			printf(" %c |", grid[x][y]);
-			positions[number] = new Move(x, y);
 			number++;
 		}
 
@@ -29,18 +27,6 @@ void GridBuilder::DrawGrid()
 
 bool GridBuilder::CheckGridPosition(int number, char mark)
 {
-	//int index = number - 1;
-	//int row = index / gridSize;
-	//int column = index % gridSize;
-	//
-	//char gridPosition = grid[row][column];
-	//
-	//if (gridPosition == 'X' || gridPosition == 'O')
-	//{
-	//	printf("That position is taken");
-	//	return false;
-	//}
-
 	for (int row = 0; row < gridSize; row++)
 	{
 		for (int column = 0; column < gridSize; column++)
@@ -53,6 +39,25 @@ bool GridBuilder::CheckGridPosition(int number, char mark)
 		}
 	}
 
+	return false;
+}
+
+bool GridBuilder::checkGameDraw(char grid[3][3])
+{
+	for (int row = 0; row < 3; row++)
+	{
+		for (int column = 0; column < 3; column++)
+		{
+			if (grid[row][column] != 'X' && grid[row][column] != 'O')
+			{
+				//Still valid moves to make
+				return false;
+			}
+		}
+	}
+
+	//All valid moves are made, the game is a draw
+	printf("All moves have been made, the game is a draw");
 	return false;
 }
 

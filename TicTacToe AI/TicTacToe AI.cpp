@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 #include "GridBuilder.h"
 #include "Player.h"
@@ -15,55 +16,79 @@ int main()
 	bool gameWon = false;
 
 	char playerInput;
-
 	Player* player = new Player();
 	AI* enemy = new AI();
 	GridBuilder* gridBuilder = new GridBuilder();
-	gridBuilder->DrawGrid();
 
 	while (gameActive)
 	{
-
+		system("CLS");
 		if (playersTurn)
 		{
-			gridBuilder->DrawGrid();
-
-			playerInput = player->SelectNumber();
-
-			if (playerInput <= '0' || playerInput >= '9')
+			if (playersTurn)
 			{
-				printf("Invalid input");
+				printf("Players Turn! \n");
+				gridBuilder->DrawGrid();
+
+				playerInput = player->SelectNumber();
+
+				if (playerInput <= '0' || playerInput > '9')
+				{
+					printf("Invalid input");
+				}
+
+				else
+				{
+					for (int row = 0; row < 3; row++)
+					{
+						for (int column = 0; column < 3; column++)
+						{
+							if (gridBuilder->grid[row][column] == playerInput)
+							{
+								printf("Player Chosen Row: %d \n", row);
+								printf("Player Chosen Column: %d \n", column);
+
+								gridBuilder->grid[row][column] = 'X';
+							}
+						}
+					}
+					playersTurn = false;
+				}
 			}
-
 		}
-
+	
 		int enteredNumber = playerInput;
 
-		if (gridBuilder->CheckGridPosition(enteredNumber, player->Mark))
+		if (!playersTurn)
 		{
-			playersTurn = false;
-
 			Move enemyMove;
-			
-			enemyMove = enemy->MakeBestMove(gridBuilder->grid);
-			
+	
+			printf("AIs Turn! \n");
+			_getch();
+	
+			enemyMove = enemy->CalculateBestMove(gridBuilder->grid);
 			gridBuilder->grid[enemyMove.row][enemyMove.column] = 'O';
-			
+			gridBuilder->DrawGrid();
+	
+			if (gridBuilder->checkGameDraw(gridBuilder->grid))
+			{
+				_getch();
+				gameWon = false;
+			}
+	
+			if (gridBuilder->checkGameWon(gridBuilder->grid))
+			{
+				printf("Game is won!");
+				gameWon = true;
+			}
+	
+			if (gameWon)
+			{
+				gameActive = false;
+			}
+
+			_getch();
 			playersTurn = true;
 		}
-
-		if (gridBuilder->checkGameWon(gridBuilder->grid))
-		{
-			gameWon = true; 
-		}
-
-
-		if (gameWon)
-		{
-			gameActive = false;
-		}
 	}
-
 }
-
-//Returns true if the game is won.
