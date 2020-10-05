@@ -1,14 +1,5 @@
 #include "GridBuilder.h"
 
-GridBuilder::GridBuilder()
-{
-}
-
-GridBuilder::~GridBuilder()
-{
-	//delete grid;
-}
-
 void GridBuilder::DrawGrid()
 {
 	int number = 1;

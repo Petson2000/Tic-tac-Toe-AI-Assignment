@@ -8,12 +8,14 @@
 #include "Move.h"
 #include "AI.h"
 
+
 int main()
 {
 	int points = 0;
 	bool gameActive = true;
 	bool playersTurn = true;
 	bool gameWon = false;
+	int gridSize = 0;
 
 	char playerInput;
 	Player* player = new Player();
@@ -52,6 +54,7 @@ int main()
 							}
 						}
 					}
+
 					playersTurn = false;
 				}
 			}
@@ -91,4 +94,5 @@ int main()
 			playersTurn = true;
 		}
 	}
+
 }

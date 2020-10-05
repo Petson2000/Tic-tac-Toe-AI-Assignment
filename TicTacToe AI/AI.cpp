@@ -82,20 +82,20 @@ int AI::getGridState(char grid[3][3])
 	return 0;
 }
 
-int AI::MiniMax(char grid[3][3], int32_t depth, bool maximizingPlayer)
+int AI::MiniMax(char grid[3][3], int32_t depth, bool isMax)
 {
 	int startValue = getGridState(grid);
 
 	if (startValue == 10)
 	{
 		//Player won
-		return startValue;
+		return startValue - depth;
 	}
 
 	if (startValue == -10)
 	{
 		//AI won
-		return startValue;
+		return startValue + depth;
 	}
 
 	if (!SearchGridForValidSquares(grid))
@@ -103,7 +103,7 @@ int AI::MiniMax(char grid[3][3], int32_t depth, bool maximizingPlayer)
 		return 0;
 	}
 
-	if (maximizingPlayer)
+	if (isMax)
 	{
 		int maxValue = -1000;
 

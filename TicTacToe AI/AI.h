@@ -20,7 +20,8 @@ public:
 
 	int getGridState(char grid[3][3]);
 
-	int MiniMax(char grid[3][3], int32_t depth, bool maximizingPlayer);
+	int MiniMax(char grid[3][3], int32_t depth, bool isMax);
 
 	Move CalculateBestMove(char grid[3][3]);
+	
 };
