@@ -1,6 +1,6 @@
 #include "GridBuilder.h"
 
-void GridBuilder::DrawGrid()
+void GridBuilder::draw_Grid()
 {
 	int number = 1;
 	printf("\n-------------\n");
@@ -16,7 +16,7 @@ void GridBuilder::DrawGrid()
 	}
 }
 
-bool GridBuilder::CheckGridPosition(int number, char mark)
+bool GridBuilder::check_Grid_Position(int number, char mark)
 {
 	for (int row = 0; row < gridSize; row++)
 	{

@@ -1,6 +1,6 @@
 #include "AI.h"
 
-bool AI::SearchGridForValidSquares(char grid[3][3])
+bool AI::is_Move_Possible(char grid[3][3])
 {
 	for (int x = 0; x < 3; x++)
 	{
@@ -16,7 +16,7 @@ bool AI::SearchGridForValidSquares(char grid[3][3])
 	return false;
 }
 
-int AI::getGridState(char grid[3][3])
+int AI::get_Grid_State(char grid[3][3])
 {
 	for (int row = 0; row < 3; row++)
 	{
@@ -82,9 +82,9 @@ int AI::getGridState(char grid[3][3])
 	return 0;
 }
 
-int AI::MiniMax(char grid[3][3], int32_t depth, bool isMax)
+int AI::miniMax(char grid[3][3], int32_t depth, bool isMax)
 {
-	int startValue = getGridState(grid);
+	int startValue = get_Grid_State(grid);
 
 	if (startValue == 10)
 	{
@@ -98,7 +98,7 @@ int AI::MiniMax(char grid[3][3], int32_t depth, bool isMax)
 		return startValue + depth;
 	}
 
-	if (!SearchGridForValidSquares(grid))
+	if (!is_Move_Possible(grid))
 	{
 		return 0;
 	}
@@ -116,7 +116,7 @@ int AI::MiniMax(char grid[3][3], int32_t depth, bool isMax)
 					char prevMark;
 					prevMark = grid[row][column];
 					grid[row][column] = 'O';
-					int value = MiniMax(grid, depth + 1, false);
+					int value = miniMax(grid, depth + 1, false);
 					grid[row][column] = prevMark;
 					maxValue = max(value, maxValue);
 				}
@@ -140,7 +140,7 @@ int AI::MiniMax(char grid[3][3], int32_t depth, bool isMax)
 					prevMark = grid[row][column];
 					grid[row][column] = 'X';
 
-					int value = MiniMax(grid, depth + 1, true);
+					int value = miniMax(grid, depth + 1, true);
 
 					grid[row][column] = prevMark;
 
@@ -157,7 +157,7 @@ int AI::MiniMax(char grid[3][3], int32_t depth, bool isMax)
 
 
 
-Move AI::CalculateBestMove(char grid[3][3])
+Move AI::calculate_Best_Move(char grid[3][3])
 {
 	int bestValue = -1000;
 	Move bestMove;
@@ -173,7 +173,7 @@ Move AI::CalculateBestMove(char grid[3][3])
 			{
 				char prevMark = grid[row][column]; 
 				grid[row][column] = 'O';
-				int moveValue = MiniMax(grid, 0, false);
+				int moveValue = miniMax(grid, 0, false);
 				grid[row][column] = prevMark;
 
 				if (moveValue > bestValue)

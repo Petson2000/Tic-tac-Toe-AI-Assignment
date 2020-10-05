@@ -10,18 +10,12 @@ using namespace std;
 class AI 
 {
 public:
-	char Mark = 'O';
+	bool is_Move_Possible(char grid[3][3]);
 
-	char validSquares[3][3];
-	char bestMove[1][1];
+	int get_Grid_State(char grid[3][3]);
 
-public:
-	bool SearchGridForValidSquares(char grid[3][3]);
+	int miniMax(char grid[3][3], int32_t depth, bool isMax);
 
-	int getGridState(char grid[3][3]);
-
-	int MiniMax(char grid[3][3], int32_t depth, bool isMax);
-
-	Move CalculateBestMove(char grid[3][3]);
+	Move calculate_Best_Move(char grid[3][3]);
 	
 };

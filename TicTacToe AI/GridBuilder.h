@@ -11,9 +11,9 @@ using namespace std;
 class GridBuilder
 {
 public:
-	void DrawGrid();
+	void draw_Grid();
 
-	bool CheckGridPosition(int number, char mark);
+	bool check_Grid_Position(int number, char mark);
 
 	const static int gridSize = 3;
 
@@ -24,5 +24,6 @@ public:
 	char grid[gridSize][gridSize] = { {'1', '2', '3'}, { '4', '5', '6'}, {'7', '8', '9'} };
 
 	bool checkGameDraw(char grid[3][3]);
+
 	bool checkGameWon(char grid[3][3]);
 };

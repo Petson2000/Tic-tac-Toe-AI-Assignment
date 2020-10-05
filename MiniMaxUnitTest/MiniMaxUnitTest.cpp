@@ -15,7 +15,7 @@ namespace MiniMaxUnitTest
 		/* This test makes sure that the algorithm returns a valid node on the grid,
 		if it returns -1 on either x or y its invalid
 		*/
-		TEST_METHOD(ReturnValidNode)
+		TEST_METHOD(return_Valid_Node)
 		{
 			AI* AIPlayer = new AI();
 			GridBuilder* gridBuilder = new GridBuilder();
@@ -26,7 +26,7 @@ namespace MiniMaxUnitTest
 			{
 				Move currentMove = {-1, -1};
 			
-				currentMove = AIPlayer->CalculateBestMove(grid);
+				currentMove = AIPlayer->calculate_Best_Move(grid);
 				
 				if (currentMove.row == -1 || currentMove.column == -1)
 				{
@@ -40,7 +40,7 @@ namespace MiniMaxUnitTest
 		/* As the default value of the move is -1000 the minimax should never return -1000 as the move value,
 		if it does that means that the algorithm doesnt work.
 		*/
-		TEST_METHOD(MiniMaxReturnAboveZero)
+		TEST_METHOD(miniMax_Return_Valid_Value)
 		{
 			AI* AIPlayer = new AI();
 			GridBuilder* gridBuilder = new GridBuilder();
@@ -57,7 +57,7 @@ namespace MiniMaxUnitTest
 						char prevMark = grid[row][column];
 						grid[row][column] = 'O';
 
-						int moveValue = AIPlayer->MiniMax(grid, 0, false);
+						int moveValue = AIPlayer->miniMax(grid, 0, false);
 
 						grid[row][column] = prevMark;
 

@@ -8,29 +8,30 @@
 #include "Move.h"
 #include "AI.h"
 
+#define PLAYER_MARK 'X';
+#define AI_MARK 'O';
 
 int main()
 {
-	int points = 0;
-	bool gameActive = true;
-	bool playersTurn = true;
-	bool gameWon = false;
-	int gridSize = 0;
+	bool bGameActive = true;
+	bool bPlayersTurn = true;
+	bool bGameWon = false;
 
 	char playerInput;
+
 	Player* player = new Player();
 	AI* enemy = new AI();
 	GridBuilder* gridBuilder = new GridBuilder();
 
-	while (gameActive)
+	while (bGameActive)
 	{
 		system("CLS");
-		if (playersTurn)
+		if (bPlayersTurn && bGameActive)
 		{
-			if (playersTurn)
+			if (bPlayersTurn)
 			{
 				printf("Players Turn! \n");
-				gridBuilder->DrawGrid();
+				gridBuilder->draw_Grid();
 
 				playerInput = player->SelectNumber();
 
@@ -50,49 +51,58 @@ int main()
 								printf("Player Chosen Row: %d \n", row);
 								printf("Player Chosen Column: %d \n", column);
 
-								gridBuilder->grid[row][column] = 'X';
+								gridBuilder->grid[row][column] = PLAYER_MARK;
 							}
 						}
 					}
 
-					playersTurn = false;
+					bPlayersTurn = false;
 				}
 			}
 		}
 	
 		int enteredNumber = playerInput;
 
-		if (!playersTurn)
+		if (!bPlayersTurn && bGameActive)
 		{
 			Move enemyMove;
 	
 			printf("AIs Turn! \n");
 			_getch();
 	
-			enemyMove = enemy->CalculateBestMove(gridBuilder->grid);
-			gridBuilder->grid[enemyMove.row][enemyMove.column] = 'O';
-			gridBuilder->DrawGrid();
+			enemyMove = enemy->calculate_Best_Move(gridBuilder->grid);
+
+			gridBuilder->grid[enemyMove.row][enemyMove.column] = AI_MARK;
+
+			gridBuilder->draw_Grid();
 	
 			if (gridBuilder->checkGameDraw(gridBuilder->grid))
 			{
 				_getch();
-				gameWon = false;
+				printf("The game is a draw!");
+				bGameWon = false;
 			}
 	
 			if (gridBuilder->checkGameWon(gridBuilder->grid))
 			{
 				printf("Game is won!");
-				gameWon = true;
+				bGameWon = true;
 			}
 	
-			if (gameWon)
+			if (bGameWon)
 			{
-				gameActive = false;
+				bGameActive = false;
 			}
 
 			_getch();
-			playersTurn = true;
+			bPlayersTurn = true;
 		}
 	}
 
+	if (!bGameActive)
+	{
+		delete player;
+		delete enemy;
+		delete gridBuilder;
+	}
 }
