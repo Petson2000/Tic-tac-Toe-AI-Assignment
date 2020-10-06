@@ -1,6 +1,6 @@
 #include "AI.h"
 
-bool AI::is_Move_Possible(char grid[3][3])
+bool AI::is_Move_Possible(char grid[ROW_SIZE][COL_SIZE])
 {
 	for (int x = 0; x < 3; x++)
 	{
@@ -16,7 +16,7 @@ bool AI::is_Move_Possible(char grid[3][3])
 	return false;
 }
 
-int AI::get_Grid_State(char grid[3][3])
+int AI::get_Grid_State(char grid[ROW_SIZE][COL_SIZE])
 {
 	for (int row = 0; row < 3; row++)
 	{
@@ -36,7 +36,7 @@ int AI::get_Grid_State(char grid[3][3])
 	}
 
 	//Check columns
-	for (int column = 0; column < 3; column++)
+	for (int column = 0; column < COL_SIZE; column++)
 	{
 		if (grid[0][column] == grid[1][column] && grid[1][column] == grid[2][column])
 		{
@@ -52,7 +52,7 @@ int AI::get_Grid_State(char grid[3][3])
 		}
 	}
 
-	//Check diagonallys
+	//Check diagonally
 	if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2])
 	{
 		if (grid[0][0] == 'X')
@@ -82,7 +82,7 @@ int AI::get_Grid_State(char grid[3][3])
 	return 0;
 }
 
-int AI::miniMax(char grid[3][3], int32_t depth, bool isMax)
+int AI::miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax)
 {
 	int startValue = get_Grid_State(grid);
 
@@ -107,9 +107,9 @@ int AI::miniMax(char grid[3][3], int32_t depth, bool isMax)
 	{
 		int maxValue = -1000;
 
-		for (int row = 0; row < 3; row++)
+		for (int row = 0; row < ROW_SIZE; row++)
 		{
-			for (int column = 0; column < 3; column++)
+			for (int column = 0; column < COL_SIZE; column++)
 			{
 				if (grid[row][column] != 'X' && grid[row][column] != 'O')
 				{
@@ -130,9 +130,9 @@ int AI::miniMax(char grid[3][3], int32_t depth, bool isMax)
 	{
 		int minValue = 1000;
 
-		for (int row = 0; row < 3; row++)
+		for (int row = 0; row < ROW_SIZE; row++)
 		{
-			for (int column = 0; column < 3; column++)
+			for (int column = 0; column < COL_SIZE; column++)
 			{
 				if (grid[row][column] != 'X' && grid[row][column] != 'O')
 				{
@@ -157,7 +157,7 @@ int AI::miniMax(char grid[3][3], int32_t depth, bool isMax)
 
 
 
-Move AI::calculate_Best_Move(char grid[3][3])
+Move AI::calculate_Best_Move(char grid[ROW_SIZE][COL_SIZE])
 {
 	int bestValue = -1000;
 	Move bestMove;
@@ -165,9 +165,9 @@ Move AI::calculate_Best_Move(char grid[3][3])
 	bestMove.row = -1;
 	bestMove.column = -1;
 
-	for (int row = 0; row < 3; row++)
+	for (int row = 0; row < ROW_SIZE; row++)
 	{
-		for (int column = 0; column < 3; column++)
+		for (int column = 0; column < COL_SIZE; column++)
 		{
 			if (grid[row][column] != 'X' && grid[row][column] != 'O')
 			{

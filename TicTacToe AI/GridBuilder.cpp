@@ -33,7 +33,7 @@ bool GridBuilder::check_Grid_Position(int number, char mark)
 	return false;
 }
 
-bool GridBuilder::checkGameDraw(char grid[3][3])
+bool GridBuilder::checkGameDraw(char grid[ROW_SIZE][COL_SIZE])
 {
 	for (int row = 0; row < 3; row++)
 	{
@@ -52,7 +52,7 @@ bool GridBuilder::checkGameDraw(char grid[3][3])
 	return false;
 }
 
-bool GridBuilder::checkGameWon(char grid[3][3])
+bool GridBuilder::checkGameWon(char grid[ROW_SIZE][COL_SIZE])
 {
 	for (int row = 0; row < 3; row++)
 	{
