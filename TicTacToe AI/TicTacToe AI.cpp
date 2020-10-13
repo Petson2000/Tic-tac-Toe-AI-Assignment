@@ -11,6 +11,37 @@
 #define PLAYER_MARK 'X';
 #define AI_MARK 'O';
 
+enum class GameOverState : int
+{
+	GAME_WON_AI,
+	GAME_WON_PLAYER,
+	GAME_DRAW
+};
+
+void handle_Game_Over(GameOverState state)
+{
+	switch (state)
+	{
+	case GameOverState::GAME_WON_AI:
+		system("CLS");
+		printf("The Enemy Won the game!");
+		break;
+	case GameOverState::GAME_WON_PLAYER:
+		printf("You Won!");
+		system("CLS");
+
+		break;
+	case GameOverState::GAME_DRAW:
+		printf("The game is a draw");
+		system("CLS");
+
+		break;
+
+	default:
+		break;
+	}
+}
+
 int main()
 {
 	bool bGameActive = true;
@@ -30,6 +61,7 @@ int main()
 		{
 			if (bPlayersTurn)
 			{
+
 				printf("Players Turn! \n");
 				gridBuilder->draw_Grid();
 

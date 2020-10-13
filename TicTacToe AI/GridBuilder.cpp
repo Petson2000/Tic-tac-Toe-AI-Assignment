@@ -102,6 +102,20 @@ bool GridBuilder::checkGameWon(char grid[ROW_SIZE][COL_SIZE])
 		{
 			return true;
 		}
+
+	}
+
+	if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0])
+	{
+		if (grid[0][2] == 'X')
+		{
+			return true;
+		}
+
+		else if (grid[0][2] == 'O')
+		{
+			return true;
+		}
 	}
 
 	return false;
