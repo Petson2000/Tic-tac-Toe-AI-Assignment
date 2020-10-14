@@ -4,12 +4,15 @@
 #include <string>
 
 #include "Utilities.h"
+#include <array>
 #include "Move.h"
 
 #define ROW_SIZE 3
 #define COL_SIZE 3
 
 using namespace std;
+
+using Board = std::array<std::array<char, 3>, 3>;
 
 class GridBuilder
 {
@@ -23,9 +26,11 @@ public:
 public:
 	Move* positions[9];
 
-	char grid[ROW_SIZE][COL_SIZE] = { {'1', '2', '3'}, { '4', '5', '6'}, {'7', '8', '9'} };
+	Board grid = {'1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
-	bool checkGameDraw(char grid[ROW_SIZE][COL_SIZE]);
+	//char grid[ROW_SIZE][COL_SIZE] = { {'1', '2', '3'}, { '4', '5', '6'}, {'7', '8', '9'} };
 
-	bool checkGameWon(char grid[ROW_SIZE][COL_SIZE]);
+	bool checkGameDraw(const Board &board);
+
+	bool checkGameWon(const Board &board);
 };

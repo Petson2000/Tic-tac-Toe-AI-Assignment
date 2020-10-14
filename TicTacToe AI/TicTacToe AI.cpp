@@ -8,8 +8,9 @@
 #include "Move.h"
 #include "AI.h"
 
-#define PLAYER_MARK 'X';
-#define AI_MARK 'O';
+constexpr char PLAYER_MARK = 'X';
+constexpr char AI_MARK = 'O';
+
 
 enum class GameOverState : int
 {
@@ -18,27 +19,29 @@ enum class GameOverState : int
 	GAME_DRAW
 };
 
-void handle_Game_Over(GameOverState state)
+
+void handle_Game_Over(GameOverState state) noexcept
 {
 	switch (state)
 	{
+
 	case GameOverState::GAME_WON_AI:
 		system("CLS");
-		printf("The Enemy Won the game!");
+		printf("The Enemy Won the game!\n");
 		break;
-	case GameOverState::GAME_WON_PLAYER:
-		printf("You Won!");
-		system("CLS");
 
+	case GameOverState::GAME_WON_PLAYER:
+		printf("You Won!\n");
+		system("CLS");
 		break;
 	case GameOverState::GAME_DRAW:
-		printf("The game is a draw");
+		printf("The game is a draw\n");
 		system("CLS");
-
 		break;
 
 	default:
 		break;
+
 	}
 }
 
@@ -46,13 +49,14 @@ int main()
 {
 	bool bGameActive = true;
 	bool bPlayersTurn = true;
+	bool bAITurn = true;
 	bool bGameWon = false;
 
 	char playerInput;
 
-	Player* player = new Player();
-	AI* enemy = new AI();
-	GridBuilder* gridBuilder = new GridBuilder();
+	auto player = make_unique<Player>();
+
+	auto gridBuilder = make_unique<GridBuilder>();
 
 	while (bGameActive)
 	{
@@ -64,7 +68,7 @@ int main()
 				system("CLS");
 				handle_Game_Over(GameOverState::GAME_DRAW);
 				bGameActive = false;
-				continue;
+				break;
 			}
 
 			printf("Players Turn! \n");
@@ -75,9 +79,9 @@ int main()
 
 			if (player->is_Valid_Input(playerInput))
 			{
-				for (int row = 0; row < 3; row++)
+				for (int row = 0; row < ROW_SIZE; row++)
 				{
-					for (int column = 0; column < 3; column++)
+					for (int column = 0; column < COL_SIZE; column++)
 					{
 						if (gridBuilder->grid[row][column] == playerInput)
 						{
@@ -89,12 +93,15 @@ int main()
 							{
 								handle_Game_Over(GameOverState::GAME_WON_PLAYER);
 								bGameActive = false;
+								return 0;
 							}
 
 						}
 					}
 				}
+
 				bPlayersTurn = false;
+				bAITurn = true;
 			}
 
 			else
@@ -103,16 +110,14 @@ int main()
 			}
 		}
 
-		int enteredNumber = playerInput;
-
-		if (!bPlayersTurn && bGameActive)
+		if (!bPlayersTurn && bGameActive && bAITurn)
 		{
 			if (gridBuilder->checkGameDraw(gridBuilder->grid))
 			{
 				system("CLS");
 				handle_Game_Over(GameOverState::GAME_DRAW);
 				bGameActive = false;
-				continue;
+				break;
 			}
 
 			Move enemyMove;
@@ -120,17 +125,21 @@ int main()
 			printf("AIs Turn! \n");
 			_getch();
 
-			enemyMove = enemy->calculate_Best_Move(gridBuilder->grid);
+			enemyMove = AI::calculate_Best_Move(gridBuilder->grid);
 
 			gridBuilder->grid[enemyMove.row][enemyMove.column] = AI_MARK;
 
 			gridBuilder->draw_Grid();
+
+			_getch();
+			bPlayersTurn = true;
 
 			if (gridBuilder->checkGameDraw(gridBuilder->grid))
 			{
 				_getch();
 				handle_Game_Over(GameOverState::GAME_DRAW);
 				bGameWon = false;
+				return 0;
 			}
 
 			if (gridBuilder->checkGameWon(gridBuilder->grid))
@@ -143,16 +152,6 @@ int main()
 			{
 				bGameActive = false;
 			}
-
-			_getch();
-			bPlayersTurn = true;
 		}
-	}
-
-	if (!bGameActive)
-	{
-		delete player;
-		delete enemy;
-		delete gridBuilder;
 	}
 }

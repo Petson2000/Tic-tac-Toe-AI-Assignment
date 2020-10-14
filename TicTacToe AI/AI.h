@@ -8,15 +8,13 @@
 
 using namespace std;
 
-class AI 
+namespace AI 
 {
-public:
-	bool is_Move_Possible(char grid[ROW_SIZE][COL_SIZE]);
+	bool is_Move_Possible(const Board &board) noexcept;
 
-	int get_Grid_State(char grid[ROW_SIZE][COL_SIZE]);
+	int get_Grid_State(const Board &board);
 
-	int miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax);
+	int miniMax(Board &board, int32_t depth, bool isMax);
 
-	Move calculate_Best_Move(char grid[ROW_SIZE][COL_SIZE]);
-	
+	Move calculate_Best_Move(Board &board);
 };

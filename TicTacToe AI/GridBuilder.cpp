@@ -32,7 +32,7 @@ bool GridBuilder::check_Moves_Left(int number, char mark)
 	return false;
 }
 
-bool GridBuilder::checkGameDraw(char grid[ROW_SIZE][COL_SIZE])
+bool GridBuilder::checkGameDraw(const Board& board)
 {
 	for (int row = 0; row < 3; row++)
 	{
@@ -51,7 +51,7 @@ bool GridBuilder::checkGameDraw(char grid[ROW_SIZE][COL_SIZE])
 	return false;
 }
 
-bool GridBuilder::checkGameWon(char grid[ROW_SIZE][COL_SIZE])
+bool GridBuilder::checkGameWon(const Board& board)
 {
 	for (int row = 0; row < 3; row++)
 	{

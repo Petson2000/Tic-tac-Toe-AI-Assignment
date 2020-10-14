@@ -1,12 +1,12 @@
 #include "AI.h"
 
-bool AI::is_Move_Possible(char grid[ROW_SIZE][COL_SIZE])
+bool AI::is_Move_Possible(const Board& board) noexcept
 {
-	for (int x = 0; x < 3; x++)
+	for (auto row : board)
 	{
-		for (int y = 0; y < 3; y++)
+		for (auto mark : row)
 		{
-			if (grid[x][y] != 'X' && grid[x][y] != 'O')
+			if (mark != 'X' && mark != 'O')
 			{
 				return true;
 			}
@@ -16,19 +16,22 @@ bool AI::is_Move_Possible(char grid[ROW_SIZE][COL_SIZE])
 	return false;
 }
 
-int AI::get_Grid_State(char grid[ROW_SIZE][COL_SIZE])
+int AI::get_Grid_State(const Board& board)
 {
+
+	//todo: redo
+
 	for (int row = 0; row < 3; row++)
 	{
 		//Check all rows to see if anyone has won.
-		if (grid[row][0] == grid[row][1] && grid[row][1] == grid[row][2])
+		if (board[row][0] == board[row][1] && board[row][1] == board[row][2])
 		{
-			if (grid[row][0] == 'X')
+			if (board[row][0] == 'X')
 			{
 				return -10;
 			}
 
-			else if (grid[row][0] == 'O')
+			else if (board[row][0] == 'O')
 			{
 				return +10;
 			}
@@ -38,14 +41,14 @@ int AI::get_Grid_State(char grid[ROW_SIZE][COL_SIZE])
 	//Check columns
 	for (int column = 0; column < COL_SIZE; column++)
 	{
-		if (grid[0][column] == grid[1][column] && grid[1][column] == grid[2][column])
+		if (board[0][column] == board[1][column] && board[1][column] == board[2][column])
 		{
-			if (grid[0][column] == 'X')
+			if (board[0][column] == 'X')
 			{
 				return -10;
 			}
 
-			else if (grid[0][column] == 'O')
+			else if (board[0][column] == 'O')
 			{
 				return +10;
 			}
@@ -53,27 +56,27 @@ int AI::get_Grid_State(char grid[ROW_SIZE][COL_SIZE])
 	}
 
 	//Check diagonally
-	if (grid[0][0] == grid[1][1] && grid[1][1] == grid[2][2])
+	if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
 	{
-		if (grid[0][0] == 'X')
+		if (board[0][0] == 'X')
 		{
 			return -10;
 		}
 
-		else if (grid[0][0] == 'O')
+		else if (board[0][0] == 'O')
 		{
 			return +10;
 		}
 	}
 
-	if (grid[0][2] == grid[1][1] && grid[1][1] == grid[2][0])
+	if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
 	{
-		if (grid[0][2] == 'X')
+		if (board[0][2] == 'X')
 		{
 			return -10;
 		}
 
-		else if (grid[0][2] == 'O')
+		else if (board[0][2] == 'O')
 		{
 			return +10;
 		}
@@ -82,9 +85,9 @@ int AI::get_Grid_State(char grid[ROW_SIZE][COL_SIZE])
 	return 0;
 }
 
-int AI::miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax)
+int AI::miniMax(Board& board, int32_t depth, bool isMax)
 {
-	int startValue = get_Grid_State(grid);
+	const int startValue = get_Grid_State(board);
 
 	if (startValue == 10)
 	{
@@ -98,7 +101,7 @@ int AI::miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax)
 		return startValue + depth;
 	}
 
-	if (!is_Move_Possible(grid))
+	if (!is_Move_Possible(board))
 	{
 		return 0;
 	}
@@ -111,13 +114,13 @@ int AI::miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax)
 		{
 			for (int column = 0; column < COL_SIZE; column++)
 			{
-				if (grid[row][column] != 'X' && grid[row][column] != 'O')
+				if (board[row][column] != 'X' && board[row][column] != 'O')
 				{
 					char prevMark;
-					prevMark = grid[row][column];
-					grid[row][column] = 'O';
-					int value = miniMax(grid, depth + 1, false);
-					grid[row][column] = prevMark;
+					prevMark = board[row][column];
+					board[row][column] = 'O';
+					int value = miniMax(board, depth + 1, false);
+					board[row][column] = prevMark;
 					maxValue = max(value, maxValue);
 				}
 			}
@@ -134,15 +137,15 @@ int AI::miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax)
 		{
 			for (int column = 0; column < COL_SIZE; column++)
 			{
-				if (grid[row][column] != 'X' && grid[row][column] != 'O')
+				if (board[row][column] != 'X' && board[row][column] != 'O')
 				{
 					char prevMark;
-					prevMark = grid[row][column];
-					grid[row][column] = 'X';
+					prevMark = board[row][column];
+					board[row][column] = 'X';
 
-					int value = miniMax(grid, depth + 1, true);
+					int value = miniMax(board, depth + 1, true);
 
-					grid[row][column] = prevMark;
+					board[row][column] = prevMark;
 
 					minValue = min(minValue, value);
 				}
@@ -157,7 +160,7 @@ int AI::miniMax(char grid[ROW_SIZE][COL_SIZE], int32_t depth, bool isMax)
 
 
 
-Move AI::calculate_Best_Move(char grid[ROW_SIZE][COL_SIZE])
+Move AI::calculate_Best_Move(Board& board)
 {
 	int bestValue = -1000;
 	Move bestMove;
@@ -169,12 +172,12 @@ Move AI::calculate_Best_Move(char grid[ROW_SIZE][COL_SIZE])
 	{
 		for (int column = 0; column < COL_SIZE; column++)
 		{
-			if (grid[row][column] != 'X' && grid[row][column] != 'O')
+			if (board[row][column] != 'X' && board[row][column] != 'O')
 			{
-				char prevMark = grid[row][column]; 
-				grid[row][column] = 'O';
-				int moveValue = miniMax(grid, 0, false);
-				grid[row][column] = prevMark;
+				char prevMark = board[row][column];
+				board[row][column] = 'O';
+				int moveValue = miniMax(board, 0, false);
+				board[row][column] = prevMark;
 
 				if (moveValue > bestValue)
 				{
