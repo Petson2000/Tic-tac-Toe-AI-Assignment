@@ -16,7 +16,7 @@ class GridBuilder
 public:
 	void draw_Grid();
 
-	bool check_Grid_Position(int number, char mark);
+	bool check_Moves_Left(int number, char mark);
 
 	int gridSize = 3;
 	

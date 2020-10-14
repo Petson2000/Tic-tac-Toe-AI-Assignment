@@ -57,70 +57,88 @@ int main()
 	while (bGameActive)
 	{
 		system("CLS");
-		if (bPlayersTurn && bGameActive)
+		if (bPlayersTurn)
 		{
-			if (bPlayersTurn)
+			if (gridBuilder->checkGameDraw(gridBuilder->grid))
 			{
+				system("CLS");
+				handle_Game_Over(GameOverState::GAME_DRAW);
+				bGameActive = false;
+				continue;
+			}
 
-				printf("Players Turn! \n");
-				gridBuilder->draw_Grid();
+			printf("Players Turn! \n");
+			gridBuilder->draw_Grid();
 
-				playerInput = player->SelectNumber();
+			playerInput = player->make_Move();
 
-				if (playerInput <= '0' || playerInput > '9')
+
+			if (player->is_Valid_Input(playerInput))
+			{
+				for (int row = 0; row < 3; row++)
 				{
-					printf("Invalid input");
-				}
-
-				else
-				{
-					for (int row = 0; row < 3; row++)
+					for (int column = 0; column < 3; column++)
 					{
-						for (int column = 0; column < 3; column++)
+						if (gridBuilder->grid[row][column] == playerInput)
 						{
-							if (gridBuilder->grid[row][column] == playerInput)
-							{
-								printf("Player Chosen Row: %d \n", row);
-								printf("Player Chosen Column: %d \n", column);
+							printf("Player Chosen Row: %d \n", row);
+							printf("Player Chosen Column: %d \n", column);
 
-								gridBuilder->grid[row][column] = PLAYER_MARK;
+							gridBuilder->grid[row][column] = PLAYER_MARK;
+							if (gridBuilder->checkGameWon(gridBuilder->grid))
+							{
+								handle_Game_Over(GameOverState::GAME_WON_PLAYER);
+								bGameActive = false;
 							}
+
 						}
 					}
-
-					bPlayersTurn = false;
 				}
+				bPlayersTurn = false;
+			}
+
+			else
+			{
+				_getch();
 			}
 		}
-	
+
 		int enteredNumber = playerInput;
 
 		if (!bPlayersTurn && bGameActive)
 		{
+			if (gridBuilder->checkGameDraw(gridBuilder->grid))
+			{
+				system("CLS");
+				handle_Game_Over(GameOverState::GAME_DRAW);
+				bGameActive = false;
+				continue;
+			}
+
 			Move enemyMove;
-	
+
 			printf("AIs Turn! \n");
 			_getch();
-	
+
 			enemyMove = enemy->calculate_Best_Move(gridBuilder->grid);
 
 			gridBuilder->grid[enemyMove.row][enemyMove.column] = AI_MARK;
 
 			gridBuilder->draw_Grid();
-	
+
 			if (gridBuilder->checkGameDraw(gridBuilder->grid))
 			{
 				_getch();
-				printf("The game is a draw!");
+				handle_Game_Over(GameOverState::GAME_DRAW);
 				bGameWon = false;
 			}
-	
+
 			if (gridBuilder->checkGameWon(gridBuilder->grid))
 			{
-				printf("Game is won!");
+				handle_Game_Over(GameOverState::GAME_WON_AI);
 				bGameWon = true;
 			}
-	
+
 			if (bGameWon)
 			{
 				bGameActive = false;

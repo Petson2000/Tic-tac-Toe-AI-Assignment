@@ -16,15 +16,14 @@ void GridBuilder::draw_Grid()
 	}
 }
 
-bool GridBuilder::check_Grid_Position(int number, char mark)
+bool GridBuilder::check_Moves_Left(int number, char mark)
 {
 	for (int row = 0; row < gridSize; row++)
 	{
 		for (int column = 0; column < gridSize; column++)
 		{
-			if (grid[row][column] == number)
+			if (grid[row][column] != 'X' && grid[row][column] != 'O')
 			{
-				grid[row][column] = mark;
 				return true;
 			}
 		}
