@@ -26,17 +26,14 @@ void handle_Game_Over(GameOverState state) noexcept
 	{
 
 	case GameOverState::GAME_WON_AI:
-		system("CLS");
 		printf("The Enemy Won the game!\n");
 		break;
 
 	case GameOverState::GAME_WON_PLAYER:
 		printf("You Won!\n");
-		system("CLS");
 		break;
 	case GameOverState::GAME_DRAW:
 		printf("The game is a draw\n");
-		system("CLS");
 		break;
 
 	default:
@@ -107,20 +104,19 @@ int main()
 
 			else
 			{
-				_getch();
 			}
+		}
+
+		if (gridBuilder->checkGameDraw(gridBuilder->grid))
+		{
+			system("CLS");
+			handle_Game_Over(GameOverState::GAME_DRAW);
+			bGameActive = false;
+			_getch();
 		}
 
 		if (!bPlayersTurn && bGameActive && bAITurn)
 		{
-			if (gridBuilder->checkGameDraw(gridBuilder->grid))
-			{
-				system("CLS");
-				handle_Game_Over(GameOverState::GAME_DRAW);
-				bGameActive = false;
-				break;
-			}
-
 			Move enemyMove;
 
 			printf("AIs Turn! \n");

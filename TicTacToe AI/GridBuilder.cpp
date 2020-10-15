@@ -61,8 +61,8 @@ bool GridBuilder::checkGameDraw(const Board& board) noexcept
 	}
 
 	//All valid moves are made, the game is a draw
-	printf("All moves have been made, the game is a draw");
-	return false;
+	//printf("All moves have been made, the game is a draw");
+	return true;
 }
 
 bool GridBuilder::checkGameWon(const Board& board) noexcept
