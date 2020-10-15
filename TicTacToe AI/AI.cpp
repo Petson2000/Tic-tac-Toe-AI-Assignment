@@ -16,7 +16,7 @@ bool AI::is_Move_Possible(const Board& board) noexcept
 	return false;
 }
 
-int AI::get_Grid_State(const Board& board)
+int AI::get_Grid_State(const Board& board) noexcept
 {
 
 	//todo: redo
@@ -176,7 +176,7 @@ Move AI::calculate_Best_Move(Board& board)
 			{
 				char prevMark = board[row][column];
 				board[row][column] = 'O';
-				int moveValue = miniMax(board, 0, false);
+				const int moveValue = miniMax(board, 0, false);
 				board[row][column] = prevMark;
 
 				if (moveValue > bestValue)

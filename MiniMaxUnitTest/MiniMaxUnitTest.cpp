@@ -17,16 +17,14 @@ namespace MiniMaxUnitTest
 		*/
 		TEST_METHOD(return_Valid_Node)
 		{
-			AI* AIPlayer = new AI();
 			GridBuilder* gridBuilder = new GridBuilder();
 			
-			char grid[3][3];
-			
+			Board board;
 			for (int i = 0; i < 3; i++)
 			{
 				Move currentMove = {-1, -1};
 			
-				currentMove = AIPlayer->calculate_Best_Move(grid);
+				currentMove = AI::calculate_Best_Move(board);
 				
 				if (currentMove.row == -1 || currentMove.column == -1)
 				{
@@ -38,28 +36,27 @@ namespace MiniMaxUnitTest
 
 
 		/* As the default value of the move is -1000 the minimax should never return -1000 as the move value,
-		if it does that means that the algorithm doesnt work.
+		if it does that means that the algorithm doesn't work.
 		*/
 		TEST_METHOD(miniMax_Return_Valid_Value)
 		{
-			AI* AIPlayer = new AI();
 			GridBuilder* gridBuilder = new GridBuilder();
 
-			char grid[3][3];
+			Board board;
 			int bestValue = 0;
 
 			for (int row = 0; row < 3; row++)
 			{
 				for (int column = 0; column < 3; column++)
 				{
-					if (grid[row][column] != 'X' && grid[row][column] != 'O')
+					if (board[row][column] != 'X' && board[row][column] != 'O')
 					{
-						char prevMark = grid[row][column];
-						grid[row][column] = 'O';
+						char prevMark = board[row][column];
+						board[row][column] = 'O';
 
-						int moveValue = AIPlayer->miniMax(grid, 0, false);
+						int moveValue = AI::miniMax(board, 0, false);
 
-						grid[row][column] = prevMark;
+						board[row][column] = prevMark;
 
 						if (moveValue > bestValue)
 						{

@@ -4,7 +4,7 @@
 #include <string>
 #include <sstream>
 
-bool Player::is_Valid_Input(char playerInput)
+bool Player::is_Valid_Input(char playerInput) noexcept
 {
 	if (playerInput == '\n')
 	{

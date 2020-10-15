@@ -3,7 +3,7 @@
 class Utilities
 {
 public:
-	static bool CheckInputValid(char input)
+	static bool CheckInputValid(char input) noexcept
 	{
 		if (input <= 0 || input >= 9)
 		{

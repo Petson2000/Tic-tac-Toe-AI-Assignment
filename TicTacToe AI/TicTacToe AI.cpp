@@ -57,6 +57,7 @@ int main()
 	auto player = make_unique<Player>();
 
 	auto gridBuilder = make_unique<GridBuilder>();
+	gridBuilder->GenerateBoard(gridBuilder->grid);
 
 	while (bGameActive)
 	{
@@ -72,7 +73,7 @@ int main()
 			}
 
 			printf("Players Turn! \n");
-			gridBuilder->draw_Grid();
+			gridBuilder->draw_Grid(gridBuilder->grid);
 
 			playerInput = player->make_Move();
 
@@ -129,7 +130,7 @@ int main()
 
 			gridBuilder->grid[enemyMove.row][enemyMove.column] = AI_MARK;
 
-			gridBuilder->draw_Grid();
+			gridBuilder->draw_Grid(gridBuilder->grid);
 
 			_getch();
 			bPlayersTurn = true;

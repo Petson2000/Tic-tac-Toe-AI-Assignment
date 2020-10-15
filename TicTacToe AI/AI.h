@@ -12,7 +12,7 @@ namespace AI
 {
 	bool is_Move_Possible(const Board &board) noexcept;
 
-	int get_Grid_State(const Board &board);
+	int get_Grid_State(const Board &board) noexcept;
 
 	int miniMax(Board &board, int32_t depth, bool isMax);
 

@@ -1,26 +1,25 @@
 #include "GridBuilder.h"
 
-void GridBuilder::draw_Grid()
+void GridBuilder::draw_Grid(Board &board) noexcept
 {
-	int number = 1;
 	printf("\n-------------\n");
-	for (int x = 0; x < gridSize; x++)
+	for (int x = 0; x < ROW_SIZE; x++)
 	{
-		for (int y = 0; y < gridSize; y++)
+		for (int y = 0; y < COL_SIZE; y++)
 		{
 			printf(" %c |", grid[x][y]);
-			number++;
 		}
 
 		printf("\n-------------\n");
 	}
+
 }
 
-bool GridBuilder::check_Moves_Left(int number, char mark)
+bool GridBuilder::check_Moves_Left(int number, char mark) noexcept
 {
-	for (int row = 0; row < gridSize; row++)
+	for (int row = 0; row < ROW_SIZE; row++)
 	{
-		for (int column = 0; column < gridSize; column++)
+		for (int column = 0; column < COL_SIZE; column++)
 		{
 			if (grid[row][column] != 'X' && grid[row][column] != 'O')
 			{
@@ -32,7 +31,22 @@ bool GridBuilder::check_Moves_Left(int number, char mark)
 	return false;
 }
 
-bool GridBuilder::checkGameDraw(const Board& board)
+void GridBuilder::GenerateBoard(Board& board) const noexcept
+{
+	int number = 0;
+
+	for (auto row : board)
+	{
+		for (auto mark : row)
+		{
+			mark = number;
+		}
+
+		number++;
+	}
+}
+
+bool GridBuilder::checkGameDraw(const Board& board) noexcept
 {
 	for (int row = 0; row < 3; row++)
 	{
@@ -51,7 +65,7 @@ bool GridBuilder::checkGameDraw(const Board& board)
 	return false;
 }
 
-bool GridBuilder::checkGameWon(const Board& board)
+bool GridBuilder::checkGameWon(const Board& board) noexcept
 {
 	for (int row = 0; row < 3; row++)
 	{

@@ -8,7 +8,7 @@ public:
 	char Mark = 'X';
 
 public:
-	bool is_Valid_Input(char playerInput);
+	bool is_Valid_Input(char playerInput) noexcept;
 
 	char make_Move();
 };
