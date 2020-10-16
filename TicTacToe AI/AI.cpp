@@ -1,5 +1,8 @@
 #include "AI.h"
 
+constexpr char PLAYER_MARK = 'X';
+constexpr char AI_MARK = 'O';
+
 bool AI::is_Move_Possible(const Board& board) noexcept
 {
 	for (auto row : board)
@@ -26,12 +29,12 @@ int AI::get_Grid_State(const Board& board) noexcept
 		//Check all rows to see if anyone has won.
 		if (board[row][0] == board[row][1] && board[row][1] == board[row][2])
 		{
-			if (board[row][0] == 'X')
+			if (board[row][0] == PLAYER_MARK)
 			{
 				return -10;
 			}
 
-			else if (board[row][0] == 'O')
+			else if (board[row][0] == AI_MARK)
 			{
 				return +10;
 			}
@@ -43,12 +46,12 @@ int AI::get_Grid_State(const Board& board) noexcept
 	{
 		if (board[0][column] == board[1][column] && board[1][column] == board[2][column])
 		{
-			if (board[0][column] == 'X')
+			if (board[0][column] == PLAYER_MARK)
 			{
 				return -10;
 			}
 
-			else if (board[0][column] == 'O')
+			else if (board[0][column] == AI_MARK)
 			{
 				return +10;
 			}
@@ -58,12 +61,12 @@ int AI::get_Grid_State(const Board& board) noexcept
 	//Check diagonally
 	if (board[0][0] == board[1][1] && board[1][1] == board[2][2])
 	{
-		if (board[0][0] == 'X')
+		if (board[0][0] == PLAYER_MARK)
 		{
 			return -10;
 		}
 
-		else if (board[0][0] == 'O')
+		else if (board[0][0] == AI_MARK)
 		{
 			return +10;
 		}
@@ -71,12 +74,12 @@ int AI::get_Grid_State(const Board& board) noexcept
 
 	if (board[0][2] == board[1][1] && board[1][1] == board[2][0])
 	{
-		if (board[0][2] == 'X')
+		if (board[0][2] == PLAYER_MARK)
 		{
 			return -10;
 		}
 
-		else if (board[0][2] == 'O')
+		else if (board[0][2] == AI_MARK)
 		{
 			return +10;
 		}
@@ -114,7 +117,7 @@ int AI::miniMax(Board& board, int32_t depth, bool isMax)
 		{
 			for (int column = 0; column < COL_SIZE; column++)
 			{
-				if (board[row][column] != 'X' && board[row][column] != 'O')
+				if (board[row][column] != PLAYER_MARK && board[row][column] != AI_MARK)
 				{
 					char prevMark;
 					prevMark = board[row][column];
@@ -137,11 +140,11 @@ int AI::miniMax(Board& board, int32_t depth, bool isMax)
 		{
 			for (int column = 0; column < COL_SIZE; column++)
 			{
-				if (board[row][column] != 'X' && board[row][column] != 'O')
+				if (board[row][column] != PLAYER_MARK && board[row][column] != AI_MARK)
 				{
 					char prevMark;
 					prevMark = board[row][column];
-					board[row][column] = 'X';
+					board[row][column] = PLAYER_MARK;
 
 					int value = miniMax(board, depth + 1, true);
 
@@ -172,10 +175,10 @@ Move AI::calculate_Best_Move(Board& board)
 	{
 		for (int column = 0; column < COL_SIZE; column++)
 		{
-			if (board[row][column] != 'X' && board[row][column] != 'O')
+			if (board[row][column] != PLAYER_MARK && board[row][column] != AI_MARK)
 			{
 				char prevMark = board[row][column];
-				board[row][column] = 'O';
+				board[row][column] = AI_MARK;
 				const int moveValue = miniMax(board, 0, false);
 				board[row][column] = prevMark;
 
